@@ -1,0 +1,37 @@
+{
+  "name": "simpd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bundle.js",
+    "postinstall": "node build.js with-client",
+    "watch": "node watch.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-polyfill": "^6.3.14",
+    "bluebird": "^3.1.1",
+    "js2xmlparser": "^1.0.0",
+    "koa": "2.0.0-alpha.3",
+    "koa-better-body": "^1.0.17",
+    "koa-body": "^1.4.0",
+    "koa-convert": "^1.2.0",
+    "koa-router": "^7.0.0",
+    "koa-send": "^3.1.0",
+    "koa-serve": "^0.1.7",
+    "koa-static": "^2.0.0",
+    "mpdlib": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-plugin-syntax-decorators": "^6.3.13",
+    "babel-plugin-transform-async-to-module-method": "^6.4.0",
+    "babel-plugin-transform-decorators": "^6.4.0",
+    "babel-plugin-transform-function-bind": "^6.3.13",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "nodemon": "^1.8.1",
+    "rollup": "^0.25.1",
+    "rollup-plugin-babel": "^2.3.9"
+  }
+}
