@@ -2,10 +2,8 @@
 	"folders":
 	[
 		{
-			"path": "."
-		},
-		{
-			"path": "/Users/lukaskohler/Documents/dev/telefon"
+			"path": ".",
+			"file_exclude_patterns": ["bundle.js", "*.map"]
 		}
 	]
 }

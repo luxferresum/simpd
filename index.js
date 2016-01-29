@@ -1,17 +1,26 @@
-"use strict";
-import "babel-polyfill";
+"use strict"
 
-import Mpd from './lib/Mpd.js';
+import "babel-polyfill"
+
+import Mpd from './lib/Mpd.js'
+import {start} from './lib/static.js'
 
 async function run() {
-	let mpd = new Mpd('labblaster', 6600);
+	// let mpd = new Mpd('labblaster', 6600);
 
-	let curr = await mpd.currentsong();
+	// try {
+	// 	//let curr = await mpd.lsinfo('00_music/autosort')
 
-	console.log("======DEBUG:=====");
+	// 	let t = await mpd.test();
 
+	// 	console.log("======DEBUG OK:=====");
 
-	console.log(curr);
+	// 	console.log(t);
+	// } catch (e) {
+	// 	console.log("======DEBUG ERROR:=====");
+	// 	console.log(e);
+	// }
 }
 
-run();
+start()
+run()
