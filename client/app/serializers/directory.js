@@ -13,29 +13,34 @@ export default DS.JSONAPISerializer.extend({
 	normalizeResponse(store, primaryModelClass, payload, id, requestType) {
 		let parsed = parseList(payload, 'directory', 'playlist', 'file');
 
-		let dirs = listToJsonApi(parsed, 'directory', dir => ({
-			subDirs: {
-				links: {
-					related: `lsinfo ${dir.directory}`
+		let data = {
+			directory: listToJsonApi(parsed, 'directory', dir => ({
+				subDirs: {
+					links: {
+						related: `lsinfo ${dir.directory}`
+					}
+				},
+				files: {
+					links: {
+						related: `lsinfo ${dir.directory}`
+					}
+				},
+				parentDir: {
+					id: parentId(dir.directory),
+					type: 'directory'
 				}
-			},
-			parentDir: {
-				id: parentId(dir.directory),
-				type: 'directory'
-			}
-		}));
-
-		debugger;
-		let files = listToJsonApi(parsed, 'file', file => ({
-			directory: {
-				id: parentId(file.file),
-				type: 'directory'
-			}
-		}));
+			})),
+			file: listToJsonApi(parsed, 'file', file => ({
+				directory: {
+					id: parentId(file.file),
+					type: 'directory'
+				}
+			}))
+		};
 
 		return {
-			data: dirs.map(d => getProperties(d, 'id', 'type')),
-			included: [...dirs, ...files]
+			data: data[primaryModelClass.modelName].map(d => getProperties(d, 'id', 'type')),
+			included: [...data.directory, ...data.file]
 		}
 	}
 });

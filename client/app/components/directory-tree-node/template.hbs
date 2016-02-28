@@ -1,8 +1,11 @@
 <span {{action "toggleDetail"}}>{{node.directory}}</span> {{showDetail}}
 {{#if showDetail}}
 	<ul>
-		{{#each node.subDirs as |n|}}
-			<li>{{directory-tree-node node=n}}</li>
+		{{#each node.files as |f|}}
+			<li>{{f.id}}</li>
 		{{/each}}
+		{{!-- {{#each node.subDirs as |n|}}
+			<li>{{directory-tree-node node=n}}</li>
+		{{/each}} --}}
 	</ul>
 {{/if}}
