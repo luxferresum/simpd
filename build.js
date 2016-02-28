@@ -16,7 +16,7 @@ Promise.resolve()
 				"module": "bluebird",
 				"method": "coroutine"
 			}]]
-		}) ]
+		})]
 	});
 })
 .then(function(data) {

@@ -9,7 +9,8 @@
     "jquery": "1.11.3",
     "loader.js": "^3.5.0",
     "qunit": "~1.20.0",
-    "seiyria-bootstrap-slider": "~6.0.10"
+    "seiyria-bootstrap-slider": "~6.0.10",
+    "bootstrap-sass": "~3.3.6"
   },
   "resolutions": {
     "ember": "2.2.0"

@@ -8,7 +8,7 @@
     "postinstall": "node build.js with-client",
     "watch": "node watch.js"
   },
-    "engines": {
+  "engines": {
     "node": ">= 0.10.0"
   },
   "author": "",

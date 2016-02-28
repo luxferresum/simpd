@@ -1,1 +1,9 @@
-{{yield}}
+<header id="mpd-control">
+	
+	<div id="mpd-control-buttons">
+		<button id="mpd-control-playpause-button" {{action "play"}}>
+			<span class="glyphicon glyphicon-play"></span>
+		</button>
+	</div>
+	{{input-range value=mpd.volume min="0" max="100"}}
+</header>
