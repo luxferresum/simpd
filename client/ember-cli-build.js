@@ -12,9 +12,15 @@ module.exports = function(defaults) {
     }
   });
 
+  app.import('vendor/shims/socket.io.js');
+
   var bootstrapFonts = new Funnel('bower_components/bootstrap-sass/assets/fonts', {
     destDir: 'fonts'
   });
+
+  // var socketIO = new Funnel('node_modules/socket.io-client/socket.io.js', {
+  //   destDir: 'assets/socket.io-client.js'
+  // });
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

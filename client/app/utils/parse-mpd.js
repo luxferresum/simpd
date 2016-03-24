@@ -7,13 +7,11 @@ export function parseAttrs(attrs) {
 }
 
 export function parseList(str, ...startNames) {
-	return str.split('\n').map(str => str.split(': ')).reduce((res, pair) => {
-		console.log('process pair', pair);
-		if(startNames.indexOf(pair[0]) !== -1) {
-			console.log('set curr')
+	return str.split('\n').map(str => str.split(': ')).reduce((res, [key, val]) => {
+		if(startNames.indexOf(key) !== -1) {
 			res.arr.push(res.curr = {})
 		}
-		res.curr[pair[0]] = pair[1];
+		res.curr[key] = val;
 		return res;
 	}, {arr:[]}).arr;
 }
