@@ -1,7 +1,5 @@
-bundle.js
-bundle.js.map
 node_modules/
 simpd.sublime-workspace
-client/bower_components
-client/tmp
-client/dist
+bower_components/
+tmp/
+dist/
