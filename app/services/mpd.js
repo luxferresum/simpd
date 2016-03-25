@@ -3,12 +3,31 @@ import DS from 'ember-data';
 import {parseAttrs} from '../utils/parse-mpd';
 import io from 'socket.io';
 
-const {get} = Ember;
+const {get,set} = Ember;
+
+function send(socket,event,data) {
+	return new Ember.RSVP.Promise((resolve,reject) => {
+		socket.emit(event,data, ({ok,data}) => {
+			if(ok) {
+				resolve(data);
+			} else {
+				reject(data);
+			}
+		});
+	});
+}
 
 export default Ember.Service.extend({
 	onInit: Ember.on('init', function() {
-		const socket = io();
+		set(this, 'socket', io());
 	}),
+	cmd(command) {
+		return send(get(this, 'socket'), {
+			host: 'labblaster',
+			port: 6600,
+			cmd: 'lsinfo /',
+		})
+	}
 	// ajax: Ember.inject.service(),
 	// cmd(command) {
 	// 	console.log(`request command: ${command}`);

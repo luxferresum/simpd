@@ -6,7 +6,7 @@ import KoaRouter from 'koa-router'
 import KoaSend from 'koa-send'
 import socketIO from 'socket.io'
 
-import {subscribe} from './mpd'
+import {cmd, subscribe} from './mpd'
 
 export default function run() {
 	console.log('Start Koa...');
@@ -19,12 +19,21 @@ export default function run() {
 	router.use(KoaConvert(KoaBetterBody()))
 
 	io.on('connection', function(socket){
+		socket.on('cmd', (data, fn) => {
+			cmd(data.host, data.port, data.cmd).then(data => {
+				console.log('response')
+				fn({ok: true, data})
+			}, err => {
+				fn({ok: false, data})
+			})
+		})
+
 		console.log('a user connected');
-	  	subscribe('labblaster', 6600).then(data => {
-			console.log('subscribe ok');
-		}, err => {
-			console.log('subscribe error', err);
-		});
+	 //  	subscribe('labblaster', 6600).then(data => {
+		// 	console.log('subscribe ok');
+		// }, err => {
+		// 	console.log('subscribe error', err);
+		// });
 	});
 
 	// router.post('/cmd', async function(ctx, next) {

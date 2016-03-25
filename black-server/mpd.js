@@ -12,19 +12,47 @@ async function connect(host, port) {
 	return sock;
 }
 
-export async function subscribe(host, port, callback) {
-	let sock = await connect(host, port)
+function endsWithOKorACK(str) {
+	
 
-	while(true) {
-		let str = await sock.read() 
-	}
-	console.log('data', str)
+
 }
 
-export async function cmd(host, port, message) {
+export async function cmd(host, port, cmd) {
 	let sock = await connect(host, port)
 
-	
+	sock.send(cmd)
+
+	let str = ''
+	while(true) {
+		str += await sock.read()
+		let lastIdx = str.length-1
+
+		while(str[lastIdx] === '\n') {
+			lastIdx--
+		}
+		console.log(lastIdx)
+		let lstLineIdx = str.substr(0, lastIdx+1).lastIndexOf('\n')
+		console.log(lstLineIdx)
+
+		let lastLine = str.substr(lstLineIdx+1)
+
+		if(lastLine.startsWith('OK')) {
+			console.log('done ok')
+			return str.substr(0, lstLineIdx)
+		} else if(lastLine.startsWith('ACK')) {
+			console.log('done ack')
+			throw str
+		} else {
+			console.log('not yet done', lastLine)
+		}
+	}
+}
+
+export async function subscribe(host, port, cmd) {
+	let sock = await connect(host, port)
+
+	sock.send(cmd)
 }
 
 class Socket {
@@ -72,5 +100,9 @@ class Socket {
 				this.promise = {resolve, reject}
 			})
 		}
+	}
+	send(data) {
+		console.log('send data')
+		this.sock.write(`${data}\n`);
 	}
 }
