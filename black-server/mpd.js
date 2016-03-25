@@ -49,10 +49,13 @@ export async function cmd(host, port, cmd) {
 	}
 }
 
-export async function subscribe(host, port, cmd) {
-	let sock = await connect(host, port)
-
-	sock.send(cmd)
+export async function subscribe(host, port, fn) {
+	while(true) {
+		console.log('subscribe...')
+		let changed = await cmd(host, port, 'idle')
+		console.log('changed...', changed)
+		fn(changed)
+	}
 }
 
 class Socket {

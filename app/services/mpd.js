@@ -26,7 +26,7 @@ export default Ember.Service.extend({
 			host: 'labblaster',
 			port: 6600,
 			cmd: 'lsinfo /',
-		})
+		});
 	}
 	// ajax: Ember.inject.service(),
 	// cmd(command) {

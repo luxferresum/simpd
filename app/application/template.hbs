@@ -1,4 +1,8 @@
-{{mpd-control}}
+{{#with model as |mpd|}}
+	{{mpd.state}}
+
+{{/with}}
+{{!-- {{mpd-control}}
 
 {{outlet}}
-{{directory-tree}}
+{{directory-tree}} --}}

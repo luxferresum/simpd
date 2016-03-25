@@ -23,9 +23,17 @@ export default function run() {
 			cmd(data.host, data.port, data.cmd).then(data => {
 				console.log('response')
 				fn({ok: true, data})
-			}, err => {
-				fn({ok: false, data})
+			}, error => {
+				fn({ok: false, error})
 			})
+		})
+
+		socket.on('subscribe', (data, fn) => {
+			subscribe(data.host, data.port, data => {
+				fn({ok: true, data})
+			}).then(null, error => {
+				fn({ok: false, error})
+			}) // hopefully never returns
 		})
 
 		console.log('a user connected');
