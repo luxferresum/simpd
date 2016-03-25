@@ -8,13 +8,15 @@ var MergeTrees = require('broccoli-merge-trees');
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     sassOptions: {
-      includePaths: 'bower_components/bootstrap-sass/assets/stylesheets'
-    }
+      includePaths: [
+        'node_modules/bootstrap-sass/assets/stylesheets'
+      ]
+    },
   });
 
   app.import('vendor/shims/socket.io.js');
 
-  var bootstrapFonts = new Funnel('bower_components/bootstrap-sass/assets/fonts', {
+  var bootstrapFonts = new Funnel('node_modules/bootstrap-sass/assets/fonts', {
     destDir: 'fonts'
   });
 
