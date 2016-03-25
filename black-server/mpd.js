@@ -39,9 +39,11 @@ export async function cmd(host, port, cmd) {
 
 		if(lastLine.startsWith('OK')) {
 			console.log('done ok')
+			sock.end()
 			return str.substr(0, lstLineIdx)
 		} else if(lastLine.startsWith('ACK')) {
 			console.log('done ack')
+			sock.end()
 			throw str
 		} else {
 			console.log('not yet done', lastLine)
@@ -106,6 +108,9 @@ class Socket {
 	}
 	send(data) {
 		console.log('send data')
-		this.sock.write(`${data}\n`);
+		this.sock.write(`${data}\n`)
+	}
+	end() {
+		this.sock.end()
 	}
 }

@@ -18,25 +18,37 @@ export default function run() {
 
 	router.use(KoaConvert(KoaBetterBody()))
 
+	subscribe('labblaster', '6600', data => {
+		io.emit('changed', {
+			id: 'labblaster:6600',
+			data,
+		})
+	})
+
 	io.on('connection', function(socket){
+		console.log('client connected...')
 		socket.on('cmd', (data, fn) => {
+			console.log('run cmd...')
 			cmd(data.host, data.port, data.cmd).then(data => {
 				console.log('response')
-				fn({ok: true, data})
+				fn({
+					ok: true, 
+					data,
+				})
 			}, error => {
 				fn({ok: false, error})
 			})
 		})
 
-		socket.on('subscribe', (data, fn) => {
-			subscribe(data.host, data.port, data => {
-				fn({ok: true, data})
-			}).then(null, error => {
-				fn({ok: false, error})
-			}) // hopefully never returns
-		})
+		// socket.on('subscribe', (data, fn) => {
+		// 	subscribe(data.host, data.port, data => {
+		// 		fn({ok: true, data})
+		// 	}).then(null, error => {
+		// 		fn({ok: false, error})
+		// 	}) // hopefully never returns
+		// })
 
-		console.log('a user connected');
+		// console.log('a user connected');
 	 //  	subscribe('labblaster', 6600).then(data => {
 		// 	console.log('subscribe ok');
 		// }, err => {

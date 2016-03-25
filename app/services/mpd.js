@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import DS from 'ember-data';
-import {parseAttrs} from '../utils/parse-mpd';
+// import DS from 'ember-data';
+// import {parseAttrs} from '../utils/parse-mpd';
 import io from 'socket.io';
 
 const {get,set} = Ember;
 
-function send(socket,event,data) {
+function send(socket, event, data) {
 	return new Ember.RSVP.Promise((resolve,reject) => {
 		socket.emit(event,data, ({ok,data}) => {
 			if(ok) {
@@ -18,57 +18,22 @@ function send(socket,event,data) {
 }
 
 export default Ember.Service.extend({
+	store: Ember.inject.service(),
 	onInit: Ember.on('init', function() {
 		set(this, 'socket', io());
+
+		get(this, 'socket').on('changed', ({data, id}) => {
+			let mpd = get(this, 'store').peekRecord('mpd', id)
+			if(mpd) {
+				mpd.reload();
+			}
+		})
 	}),
-	cmd(command) {
-		return send(get(this, 'socket'), {
-			host: 'labblaster',
-			port: 6600,
-			cmd: 'lsinfo /',
+	cmd(host, port, cmd) {
+		return send(get(this, 'socket'), 'cmd', {
+			host,
+			port,
+			cmd,
 		});
 	}
-	// ajax: Ember.inject.service(),
-	// cmd(command) {
-	// 	console.log(`request command: ${command}`);
-	// 	return get(this, 'ajax').request('/cmd', {
-	// 		type: "POST",
-	// 		url:'/cmd',
-	// 		contentType: "text/text; charset=utf-8",
-	// 		dataType: "text",
-	// 		data: command
-	// 	});
-	// 	// return get(this, 'ajax')({
-	// 	// 	type: "POST",
-	// 	// 	url:'/cmd',
-	// 	// 	contentType: "text/text; charset=utf-8",
-	// 	// 	dataType: "text",
-	// 	// 	data: command
-	// 	// });
-	// },
-	// status: Ember.computed('ajax', {
-	// 	get() {
-	// 		// return get(this, 'ajax').request('/cmd', {
-	// 		// 	method: 'POST',
-	// 		// 	// data: {
-	// 		// 	// 	foo: 'bar'
-	// 		// 	// }
-	// 		// });
-	// 		let promise = this.cmd('status').then(d => parseAttrs(d))
-	// 		return DS.PromiseObject.create({promise})
-	// 	}
-	// }),
-	// volume: Ember.computed('status.volume', {
-	// 	get() {
-	// 		return get(this, 'status.volume');
-	// 	},
-	// 	set(key, val) {
-	// 		get(this, 'ajax').request('/mpd-service/volume', {
-	// 			method: 'PATCH',
-	// 			data: {
-	// 				volume: val
-	// 			}
-	// 		})
-	// 	}
-	// })
 });
