@@ -9,16 +9,16 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     sassOptions: {
       includePaths: [
-        'node_modules/bootstrap-sass/assets/stylesheets'
+        'node_modules/foundation-sites/scss'
       ]
     },
   });
 
   app.import('vendor/shims/socket.io.js');
 
-  var bootstrapFonts = new Funnel('node_modules/bootstrap-sass/assets/fonts', {
-    destDir: 'fonts'
-  });
+  // var bootstrapFonts = new Funnel('node_modules/bootstrap-sass/assets/fonts', {
+  //   destDir: 'fonts'
+  // });
 
   // var socketIO = new Funnel('node_modules/socket.io-client/socket.io.js', {
   //   destDir: 'assets/socket.io-client.js'
@@ -37,5 +37,5 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  return new MergeTrees([app.toTree(), bootstrapFonts]);
+  return new MergeTrees([app.toTree()]);
 };
