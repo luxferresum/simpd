@@ -7,13 +7,16 @@
 				{{d.directory}}
 				<ul>
 					{{#each d.subDirs as |s|}}
-						<li>{{s.directory}}</li>
+						<li>
+							{{s.directory}} {{s.subDirs.length}}
+
+							<ul>
+								{{#each s.subDirs as |x|}}
+									<li>{{x.directory}}</li>
+								{{/each}}
+							</ul>
+						</li>
 					{{/each}}
-					<li>
-						{{!-- {{#each s.subDirs as |x|}}
-							<li>{{x.directory}}</li>
-						{{/each}} --}}
-					</li>
 				</ul>
 			</li>
 		{{/each}}
