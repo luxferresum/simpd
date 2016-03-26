@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import ApplicationSerializer from './application';
 import {parseList,listToJsonApi} from '../utils/parse-mpd';
 
 const {get,getProperties} = Ember;
@@ -9,20 +10,23 @@ function parentId(str) {
 	return lastIndex && str.substr(0, lastIndex) || '';
 }
 
-export default DS.JSONAPISerializer.extend({
+export default ApplicationSerializer.extend({
 	normalizeResponse(store, primaryModelClass, payload, id, requestType) {
-		let parsed = parseList(payload, 'directory', 'playlist', 'file');
+		let mpd = get(this, 'mpd');
+
+		let {host, port, payloadData} = payload;
+		let parsed = parseList(payloadData, 'directory', 'playlist', 'file');
 
 		let data = {
 			directory: listToJsonApi(parsed, 'directory', dir => ({
 				subDirs: {
 					links: {
-						related: `lsinfo ${dir.directory}`
+						related: mpd.buildLink(host, port, `lsinfo ${dir.directory}`)
 					}
 				},
 				files: {
 					links: {
-						related: `lsinfo ${dir.directory}`
+						related: mpd.buildLink(host, port, `lsinfo ${dir.directory}`)
 					}
 				},
 				parentDir: {

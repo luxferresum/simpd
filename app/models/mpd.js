@@ -33,4 +33,6 @@ export default DS.Model.extend({
 	// elapsed: 130.403
 	// bitrate: 77
 	// audio: 44100:f:2
+
+	rootDirs: DS.hasMany('directory'),
 });

@@ -29,11 +29,22 @@ export default Ember.Service.extend({
 			}
 		})
 	}),
+	buildLink(host, port, cmd) {
+		return JSON.stringify({host, port, cmd});
+	},
+	link(link) {
+		let {host, port, cmd} = JSON.parse(link);
+		return this.cmd(host, port, cmd);
+	},
 	cmd(host, port, cmd) {
 		return send(get(this, 'socket'), 'cmd', {
 			host,
 			port,
 			cmd,
-		});
+		}).then(payloadData => ({
+			host,
+			port,
+			payloadData,
+		}));
 	}
 });

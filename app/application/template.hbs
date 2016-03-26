@@ -1,6 +1,23 @@
 {{#with model as |mpd|}}
 	{{mpd.state}}
 
+	<ul>
+		{{#each mpd.rootDirs as |d|}}
+			<li>
+				{{d.directory}}
+				<ul>
+					{{#each d.subDirs as |s|}}
+						<li>{{s.directory}}</li>
+					{{/each}}
+					<li>
+						{{!-- {{#each s.subDirs as |x|}}
+							<li>{{x.directory}}</li>
+						{{/each}} --}}
+					</li>
+				</ul>
+			</li>
+		{{/each}}
+	</ul>
 {{/with}}
 {{!-- {{mpd-control}}
 
