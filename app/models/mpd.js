@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const {get} = Ember;
+const {get,set} = Ember;
 
 export default DS.Model.extend({
 	port: DS.attr('number'),
@@ -11,6 +11,9 @@ export default DS.Model.extend({
 	isPlaying: Ember.computed('state', {
 		get() {
 			return get(this, 'state') === 'play';
+		},
+		set(key, val) {
+			return set(this, 'state', val ? 'play' : 'pause');
 		}
 	}),
 
