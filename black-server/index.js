@@ -28,9 +28,9 @@ export default function run() {
 	io.on('connection', function(socket){
 		console.log('client connected...')
 		socket.on('cmd', (data, fn) => {
-			console.log('run cmd...')
+			// console.log('run cmd...')
 			cmd(data.host, data.port, data.cmd).then(data => {
-				console.log('response')
+				// console.log('response')
 				fn({
 					ok: true, 
 					data,

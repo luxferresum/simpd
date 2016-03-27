@@ -21,12 +21,12 @@ export default ApplicationSerializer.extend({
 			directory: listToJsonApi(parsed, 'directory', dir => ({
 				subDirs: {
 					links: {
-						related: mpd.buildLink(host, port, `lsinfo ${dir.directory}`)
+						related: mpd.buildLink(host, port, `lsinfo "${dir.directory}"`)
 					}
 				},
 				files: {
 					links: {
-						related: mpd.buildLink(host, port, `lsinfo ${dir.directory}`)
+						related: mpd.buildLink(host, port, `lsinfo "${dir.directory}"`)
 					}
 				},
 				parentDir: {

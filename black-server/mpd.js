@@ -31,22 +31,22 @@ export async function cmd(host, port, cmd) {
 		while(str[lastIdx] === '\n') {
 			lastIdx--
 		}
-		console.log(lastIdx)
+		// console.log(lastIdx)
 		let lstLineIdx = str.substr(0, lastIdx+1).lastIndexOf('\n')
-		console.log(lstLineIdx)
+		// console.log(lstLineIdx)
 
 		let lastLine = str.substr(lstLineIdx+1)
 
 		if(lastLine.startsWith('OK')) {
-			console.log('done ok')
+			// console.log('done ok')
 			sock.end()
 			return str.substr(0, lstLineIdx)
 		} else if(lastLine.startsWith('ACK')) {
-			console.log('done ack')
+			console.log('done ack', {cmd,lastLine})
 			sock.end()
 			throw str
 		} else {
-			console.log('not yet done', lastLine)
+			// console.log('not yet done', lastLine)
 		}
 	}
 }
@@ -62,12 +62,12 @@ export async function subscribe(host, port, fn) {
 
 class Socket {
 	constructor(sock) {
-		console.log('create socket')
+		// console.log('create socket')
 		this.sock = sock
 		sock.setEncoding('utf8')
 		this.data = []
 		sock.on('data', data => {
-			console.log('data')
+			// console.log('data')
 			data = data.toString()
 			if(this.promise) {
 				this.promise.resolve(data)
@@ -107,7 +107,7 @@ class Socket {
 		}
 	}
 	send(data) {
-		console.log('send data')
+		// console.log('send data')
 		this.sock.write(`${data}\n`)
 	}
 	end() {

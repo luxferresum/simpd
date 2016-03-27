@@ -1,4 +1,5 @@
 {{#with model as |mpd|}}
+	{{mpd.volume}}
 	<button {{action "pause" mpd}}>pause</button>
 	<button {{action "play" mpd}}>play</button>
 	{{mpd.state}}

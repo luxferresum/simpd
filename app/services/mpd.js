@@ -23,6 +23,7 @@ export default Ember.Service.extend({
 		set(this, 'socket', io());
 
 		get(this, 'socket').on('changed', ({data, id}) => {
+			console.log('changed');
 			let mpd = get(this, 'store').peekRecord('mpd', id)
 			if(mpd) {
 				mpd.reload();
